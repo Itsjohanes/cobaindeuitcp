@@ -1,22 +1,13 @@
 <?php
-$namaserver = "localhost";
-$username = "root";
-$password = "";
-$namadb = "mahasiswa"; 
-$conn = new mysqli($namaserver,$username,$password,$namadb);
-
-if(!$conn)
-{
-    die("Koneksi gagal : " . $conn->connect_error);
-}
-$createdatabase = "CREATE TABLE mahasiswa(
-    id int(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(150) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    alamat TEXT NOT NULL,
-    nim VARCHAR(7) NOT NULL,
-    kelamin VARCHAR(10) NOT NULL
-)";
-$koneksi = mysqli_query($conn,$createdatabase);
+//Get Heroku ClearDB connection information
+$cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$cleardb_server = $cleardb_url["host"];
+$cleardb_username = $cleardb_url["user"];
+$cleardb_password = $cleardb_url["pass"];
+$cleardb_db = substr($cleardb_url["path"],1);
+$active_group = 'default';
+$query_builder = TRUE;
+// Connect to DB
+$conn = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
 
 ?>
