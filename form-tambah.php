@@ -131,8 +131,8 @@ if (file_exists($target_file)) {
             if($conn->query($sql_insert) === TRUE)
              {
                 
-                
-                header("location: Tampil.php");
+                echo "berhasil";
+                //header("location: Tampil.php");
              }
            else
            {
