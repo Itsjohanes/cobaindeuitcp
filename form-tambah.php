@@ -125,8 +125,7 @@ if (file_exists($target_file)) {
   }
   
 
-        if(!empty($nim) and !empty($nama) and !empty($email) and !empty($alamat) and !empty($kelamin) and empty($errorupload))
-        {
+        
             $sql_insert = "INSERT INTO mahasiswa (nim,nama,email,alamat,kelamin) VALUE ('$nim','$nama','$email','$alamat','$kelamin')";
             if($conn->query($sql_insert) === TRUE)
              {
@@ -144,7 +143,7 @@ if (file_exists($target_file)) {
 
         }
         
-    }
+    
         
 
         
