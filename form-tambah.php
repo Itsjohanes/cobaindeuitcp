@@ -80,16 +80,60 @@
             $kelamin = test_input($_POST["kelamin"]);
         }
         
+$target_dir = "upload/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $image_name	= addslashes($_FILES['fileToUpload']['name']);
 
+        $uploadOk = 1;
+        } else {
+        $errorupload =  "File is not an image.";
+        $uploadOk = 0;
+        }
+if (file_exists($target_file)) {
+    $errorupload = "Sorry, file already exists.";
+    $uploadOk = 0;
+  }
+  
+  // Check file size
+  if ($_FILES["fileToUpload"]["size"] > 1000000000) {
+    $errorupload = "Sorry, your file is too large.";
+    $uploadOk = 0;
+  }
+  
+  // Allow certain file formats
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+  && $imageFileType != "gif" ) {
+    $errorupload ="Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    $uploadOk = 0;
+  }
+  $imageganti = $_POST['imgkeapus'];
+  unlink('upload/'.$imageganti);
+  echo $imageganti;
+
+  if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+  } else {
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+      echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+    } else {
+        $errorupload = "Sorry, there was an error uploading your file.";
+    }
+  }
         
 
         
-            $sql_insert = "INSERT INTO mahasiswa (nim,nama,email,alamat,kelamin) VALUE ('$nim','$nama','$email','$alamat','$kelamin')";
+            $sql_insert = "INSERT INTO mahasiswa (nim,nama,email,alamat,kelamin,photo) VALUE ('$nim','$nama','$email','$alamat','$kelamin','$image_name')";
             if($conn->query($sql_insert) === TRUE)
              {
                 
-                echo "berhasil";
-                header("location: Tampil.php");
+                echo "Data telah ditambahkan";
+                
              }
            else
            {
@@ -97,7 +141,7 @@
            }        
             
             $conn->close();
-            
+            header("location: Tampil.php");
 
         }
         
