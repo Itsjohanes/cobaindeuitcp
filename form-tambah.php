@@ -131,7 +131,7 @@ if (file_exists($target_file)) {
              {
                 
                 echo "berhasil";
-                //header("location: Tampil.php");
+                header("location: Tampil.php");
              }
            else
            {
